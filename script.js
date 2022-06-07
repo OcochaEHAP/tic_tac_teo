@@ -10,9 +10,11 @@ let isGameActive = true;
 const playerX_won = "playerX won";
 const playerO_won = "playerO won";
 const tie = "tie";
-
+/**
+ 0 1  
+ */
 const winningConditions = [
-  [0, 1, 3],
+  [0, 1, 2],
   [3, 4, 5],
   [6, 7, 8],
   [0, 3, 6],
@@ -29,7 +31,7 @@ function handleResultValidation() {
     const a = board[winCondition[0]];
     const b = board[winCondition[1]];
     const c = board[winCondition[2]];
-    if (a === "" || b === "" || c === "") {
+    if (a === " " || b === " " || c === " ") {
       continue;
     }
     if (a === b && b === c) {
@@ -42,7 +44,7 @@ function handleResultValidation() {
     isGameActive = false;
     return;
   }
-  if (!board.includes("")) {
+  if (!board.includes(" ")) {
     announce(tie);
   }
 }
@@ -50,13 +52,13 @@ function handleResultValidation() {
 function announce(type) {
   switch (type) {
     case playerO_won:
-      announcer.innerHTML = `player <span class="playerO">O</span> Won`;
+      announcer.innerHTML = 'player <span class="playerO">O</span> Won';
       break;
     case playerX_won:
-      announcer.innerHTML = `player <span class="playerO">O</span> Won`;
+      announcer.innerHTML = 'player <span class="playerX">X</span> Won';
       break;
     case tie:
-      announcer.innerHTML = `Tie`;
+      announcer.innerHTML = "Tie";
       break;
   }
   announcer.classList.remove("hide");
@@ -73,12 +75,17 @@ function updateBoard(index) {
   board[index] = currentPlayer;
 }
 
-function changePlayer() {
-  playerDisplay.classList.remove(`player${currentPlayer}`);
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-  playerDisplay.innerText = currentPlayer;
-  playerDisplay.classList.add(`player${currentPlayer}`);
-}
+// function changePlayer() {
+//   playerDisplay.classList.remove(`player${currentPlayer}`);
+//   // currentPlayer = currentPlayer === "X" ? "O" : "X";
+//   if (currentPlayer === "X") {
+//     currentPlayer = "O";
+//   } else {
+//     currentPlayer = "X";
+//   }
+//   playerDisplay.innerText = currentPlayer;
+//   playerDisplay.classList.add(`player${currentPlayer}`);
+// }
 
 function userAction(tile, index) {
   if (isValidAction(tile) && isGameActive) {
